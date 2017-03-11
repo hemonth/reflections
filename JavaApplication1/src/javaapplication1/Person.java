@@ -13,6 +13,7 @@ public class Person {
     protected String name;
     protected String age;
     protected String dob;
+    protected long salary;
 
     public String getName() {
         return name;
@@ -37,6 +38,15 @@ public class Person {
     public void setDob(String dob) {
         this.dob = dob;
     }
+
+    public long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
+    }
+    
     
     
     
