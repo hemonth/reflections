@@ -70,9 +70,9 @@ public class MongoDriverExample {
 //}
 //............................................................................................................
 
-MongoDatabase db = mongoClient.getDatabase("school");
-MongoCollection<Document> collection = db.getCollection("students");
-List<Document> list = collection.find().projection(Projections.slice("scores", 2, 2)).into(new LinkedList());
+//MongoDatabase db = mongoClient.getDatabase("school");
+//MongoCollection<Document> collection = db.getCollection("students");
+//List<Document> list = collection.find().projection(Projections.slice("scores", 2, 2)).into(new LinkedList());
 //list.stream().forEach(System.out::println);
 
 
@@ -80,27 +80,39 @@ List<Document> list = collection.find().projection(Projections.slice("scores", 2
 //Write a program in the language of your choice that will remove the lowest homework score for each student. Since there is a single document for each student containing an array of scores, you will need to update the scores array and remove the homework.
 //Remember, just remove a homework score. Don't remove a quiz or an exam!
 //doing aggregate iterable on students documents which contain array of scores(unwinding them into seperate documents)
-List<Document> docs = new ArrayList<>();
-AggregateIterable<Document> output = collection.aggregate(Arrays.asList(
-    new Document("$unwind", "$scores"),
-    new Document("$match", new Document("scores.type", "homework")),
-    new Document("$sort", new Document("_id",1).append("scores.score", 1)),
-        new Document("$project", new Document("scores",1).append("_id",1))
-));
+//List<Document> docs = new ArrayList<>();
+//AggregateIterable<Document> output = collection.aggregate(Arrays.asList(
+//    new Document("$unwind", "$scores"),
+//    new Document("$match", new Document("scores.type", "homework")),
+//    new Document("$sort", new Document("_id",1).append("scores.score", 1)),
+//        new Document("$project", new Document("scores",1).append("_id",1))
+//));
 //storing all documents into one list of collection
-for (Document doc : output) {
-docs.add(doc);
-}
+//for (Document doc : output) {
+//docs.add(doc);
+//}
 //update collection
-for(int i=0;i<docs.size();i =i+2){
-Document query = new Document("_id",docs.get(i).get("_id"));
-Document value = new Document("scores", docs.get(i).get("scores"));
-Document update = new Document("$pull",value);
-collection.updateMany(query, update);
-
-}
+//for(int i=0;i<docs.size();i =i+2){
+//Document query = new Document("_id",docs.get(i).get("_id"));
+//Document value = new Document("scores", docs.get(i).get("scores")); //in this context scores define array key
+//Document update = new Document("$pull",value);
+//collection.updateMany(query, update);
+//
+//}
 //..............................................................................................................
+MongoClient c =  new MongoClient();
+            MongoDatabase db = c.getDatabase("test");
+            MongoCollection<Document> animals = db.getCollection("animals");
 
+           Document animal = new Document("animal", "monkey");
+
+            //animals.insertOne(animal);
+            //animal.remove("animal");
+            animal.append("animal", "cat");
+            //animals.insertOne(animal);
+            //animal.remove("animal");
+            animal.append("animal", "lion");
+            animals.insertOne(animal);
 
     }
 }

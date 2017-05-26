@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Hemonth.Mandava
  */
-public class Person {
+public class Person extends User{
 
     private String name;
     private int age;
@@ -60,6 +60,9 @@ public class Person {
         this.skills = skills;
     }
     
+    public void hello1(){
+        System.out.println("hello static method");
+    }
     
 
 }
